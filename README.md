@@ -10,6 +10,8 @@ In Eclipse, select the Import menu. Make sure and select `Gradle -> Existing Gra
 	1. In Eclipse in the Gradle Tasks tab, run the ``forgegradle runs -> genEclipseRuns`` script to generate the launch configurations. This will take a few minutes to complete.
 	2. Once that is done, import the three launch configurations into Eclipse using the Import menu. Select ``Run/Debug -> Launch Configurations`` for the import type. Make sure to have the correct directory selected in the Import window!
 
+**Note:** It is totally fine in Eclipse to have both Minecraft-Tutorial open and your new project open, but it might be easy to mix stuff up. But it will be easier to reference the old tutorial if you keep it open. If you want to close it, right click on `Minecraft-Tutorial` in the package explorer and select `Delete`. Just don't check the checkbox to remove files from computer. If you do decide to keep it open, just make sure when you add new files, or import the launch configurations that you have the directory for your new project selected, not the old `Minecraft-Tutorial` one.
+
 ## Setting up your mod
 1. **Decide on what name you want to use for your mod**
 Decide what you want your mod to be called. It will need to have a displayable name (e.g. "Super Weapons Mod") and a name that Forge will use that doesn't have spaces or special characters (e.g. "superweaponsmod"). Also choose the package name that you will want to use for your project. The tutorial used ``com.mcjty``. You could use something like ``com.sammymc`` or whatever (I'll use ``com.sammymc`` for the descriptions in this doc). 
