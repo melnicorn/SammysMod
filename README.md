@@ -1,3 +1,4 @@
+
 # Sammy's Mod
 
 ## Setting up project
@@ -49,4 +50,46 @@ At this point you should be able to run the ``runClient`` configuration, launch 
 	 - [ ] Select ``SwordItem`` as the superclass (``net.minecraft.world.item.SwordItem``)
 	 - [ ] Make sure "Constructors from superclass" checkbox is checked
 	 - [ ] Finish creating the class
-3. Rename the parameters in the constructor to something that makes sense. I think they should be something like ``Tier tier, int baseAttackDamage, float attackSpeed, Item.Properties properties``. **Hint:** Use Eclipse ``refactor -> rename`` to rename the parameters.
+3. You will not need most of the parameters in the constructor.
+	- [ ] Delete everything except the `Properties` parameter.
+	- [ ] Rename the `Properties` variable name to something that makes sense, e.g. `properties`. **Hint:** Use Eclipse ``refactor -> rename`` to rename the parameters.
+	- [ ] We do still need to pass values to the super constructor. For now, just use the default Netherite sword values: `super(Tier.NETHERITE, 3, -2.4F, properties)`. We will change those later to be SUPER!
+	- [ ] Finally, create a public, static, final String for the internal name of your Axe. Something similar to `String INTERNAL_NAME = "superaxe"`
+
+## Registering your Axe
+We now need to register your new Axe with Forge.
+1. Create a new package `com.sammymc.setup`
+2. Create a new class called `Registration` in the `setup` package, and add some code. Reference our previous tutorial for specifics. It needs: 
+	- [ ] A private, final, static `DeferredRegister<Item>` called `ITEMS`
+	- [ ] A public, final, static `RegistryObject` for your new Axe (e.g. `SUPERAXE`). Use the `INTERNAL_NAME` that you set up in your Axe class.
+	- [ ] A static function called `init` that registers the `modEventBus` from `FMLJavaModLoadingContext` with your `ITEMS`.
+3. Call the `Registration.init()` method from your `SuperWeapons` mod class in the constructor.
+
+### Checkpoint
+At this point you should be able to run your mod, start a new creative world, and give yourself your weapon using `/give Dev superweapons:superaxe`. Test and make sure it acts like a sword by summoning a skeleton `/summon skeleton` and killing it. It will still look like a big purple checkerboard box at this point.
+
+## Making the Axe look like an Axe
+We need to create the data generation objects so that we can create the json files that map the texture to your axe. If you remember from the tutorial, this part gave us the most trouble, so reach out if it's not working.
+1. Make your axe texture using [Pixelart](https://www.pixilart.com/) or similar
+	 - [ ] Save as `superaxe.png` or similar.
+	 - [ ] In Eclipse, under `src/main/resources` create a package called `assets.superweapons.lang` and another called `assets.superweapons.textures.item`
+	 - [ ] Paste the `superaxe.png` image from file explorer into `assets.superweapons.textures.item` inside Eclipse
+2. Under `src/main/java` create a package for datagen `com.sammymc.datagen`
+3. Create an `Items` class in the datagen package. Use Eclipse to create the class.
+	- [ ] `Items` should use `ItemModelProvider` as the superclass
+	- [ ] `Items` should `@Override` the `registerModels` function.
+	- [ ] Using Eclipse to create the class will create a constructor. You can delete the `modid` parameter from the constructor, and pass in `SuperWeapons.MODID` into the call to `super(...)`
+	- [ ] We will just use a single texture for our axe, so in `registerModels` call `singleTexture` with:
+		- [ ] The path to the `SUPERAXE` registry
+		- [ ] A new `resourceLocation` for `"item/handheld"`
+		- [ ] `"layer0"`
+		- [ ] A new `resourceLocation` for MODID and `"item/superaxe"`
+4. Create a `DataGenerators` class in the datagen package.
+	- [ ] The `DataGenerators` class needs the `@Mod.EventBusSubscriber` annotation on it.
+	- [ ] It needs a public, static function on it called `gatherData` that takes a `GatherDataEvent` parameter, and the `@SubscribeEvent` annotation on the method.
+	- [ ] At this point, this `gatherData` function should add `Items` as a provider to the `DataGenerator` if we are in client mode. (Refer to tutorial)
+
+5. We should be able to run the `runData` launch configuration now which will generate `src/generated/resources/assets/superweapons/models/item/superaxe.json`. This is where it got tricky last time though, and we couldn't get the actual texture to load. Try the following:
+	- [ ] At the top level in package explorer, right click the project and select "Refresh"
+	- [ ] Right click again and select `New -> Source Folder`. For the Folder Name, browse and select `src/generated/resources` and click `Finish`.
+	- [ ] Get in touch with me!!! I think I can get it working, but it's tricky and involves completely deleting the project, and pulling it back in from Github.
