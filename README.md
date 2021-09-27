@@ -43,7 +43,7 @@ At this point you should be able to run the ``runClient`` configuration, launch 
 
 ## Creating a class for your Axe
 1. Create a new package for items in ``src/main/java``, something like ``com.sammymc.items``.
-2. Use Eclipse to make a new class for your Axe. When you're creating the class in Eclipse, make sure to select ``net.minecraft.world.item.AxeItem`` as the superclass, and check the "Constructors from superclass" checkbox before creating it.
+2. Use Eclipse to make a new class for your Axe. When you're creating the class in Eclipse, make sure to select ``net.minecraft.world.item.SwordItem`` as the superclass, and check the "Constructors from superclass" checkbox before creating it.
 	 - [ ] Use the ``New -> Class`` menu in Eclipse to create your Axe.
 	 - [ ] Make sure the package you made for "items" is selected e.g. ``com.sammymc.items``.
 	 - [ ] Select ``SwordItem`` as the superclass (``net.minecraft.world.item.SwordItem``)
