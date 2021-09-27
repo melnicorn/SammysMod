@@ -4,9 +4,9 @@
 ## Setting up project
 
 1. **Get MDK.**
-Download latest MDK [from Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) and 	unzip it into your development directory. Rename the directory to something that makes sense for your project. E.g. "SuperAxe" or something cooler than that.
+From the command line, navigate to your Development folder. From the command line run `git clone https://github.com/melnicorn/SammysMod.git` which will pull down this repository into a folder called `SammysMod`. This has the MDK from Forge, and is unmodified.
 2. **Import into Eclipse.**
-In Eclipse, select the Import menu. Make sure and select `Gradle -> Existing Gradle project` as the import type, and select the directory that you created in step 1. This might take a few minutes to process.
+In Eclipse, select the Import menu. Make sure and select `Gradle -> Existing Gradle project` as the import type, and select the `SammysMod` directory that you created in step 1. This might take a few minutes to process.
 
 **Note:** It is totally fine in Eclipse to have both Minecraft-Tutorial open and your new project open, but it might be easy to mix stuff up. But it will be easier to reference the old tutorial if you keep it open. If you want to close it, right click on `Minecraft-Tutorial` in the package explorer and select `Delete`. Just don't check the checkbox to remove files from computer. If you do decide to keep it open, just make sure when you add new files, or import the launch configurations that you have the directory for your new project selected, not the old `Minecraft-Tutorial` one.
 
