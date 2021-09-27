@@ -19,7 +19,7 @@ Without spelling out exactly what you need to do, there are several things your 
 	- [ ] Set up a public constant string called ``MODID`` to use as the internal name of your mod (e.g. ``superweapons``.
 	- [ ] Your class needs the ``@Mod`` annotation on it which should use ``MODID`` as it's name.
 	- [ ] Your class needs an empty private function named ``setup`` which takes an ``FMLCommonSetupEvent`` parameter.
-	- [ ] Your constructor needs to get the ``modEventBus`` from ``FMLLoadingContext``, and add the ``setup`` method as a listener to the ``bus``.
+	- [ ] Your constructor needs to get the ``modEventBus`` from `FMLJavaModLoadingContext`, and add the ``setup`` method as a listener to the ``bus``.
 3. **Use your mod name**
 We need to change several areas that use ``ExampleMod`` to use your internal mod name (what you set ``MODID`` equal to) and the name you want to see in Minecraft (e.g. "Super Weapons").
 	- [ ] In ``src/main/resources/META-INF/mods.toml``:
