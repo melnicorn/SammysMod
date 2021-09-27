@@ -6,9 +6,6 @@
 Download latest MDK [from Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) and 	unzip it into your development directory. Rename the directory to something that makes sense for your project. E.g. "SuperAxe" or something cooler than that.
 2. **Import into Eclipse.**
 In Eclipse, select the Import menu. Make sure and select `Gradle -> Existing Gradle project` as the import type, and select the directory that you created in step 1. This might take a few minutes to process.
-3. **Create the Launch Configurations**
-	1. In Eclipse in the Gradle Tasks tab, run the ``forgegradle runs -> genEclipseRuns`` script to generate the launch configurations. This will take a few minutes to complete.
-	2. Once that is done, import the three launch configurations into Eclipse using the Import menu. Select ``Run/Debug -> Launch Configurations`` for the import type. Make sure to have the correct directory selected in the Import window!
 
 **Note:** It is totally fine in Eclipse to have both Minecraft-Tutorial open and your new project open, but it might be easy to mix stuff up. But it will be easier to reference the old tutorial if you keep it open. If you want to close it, right click on `Minecraft-Tutorial` in the package explorer and select `Delete`. Just don't check the checkbox to remove files from computer. If you do decide to keep it open, just make sure when you add new files, or import the launch configurations that you have the directory for your new project selected, not the old `Minecraft-Tutorial` one.
 
@@ -35,6 +32,11 @@ We need to change several areas that use ``ExampleMod`` to use your internal mod
 		- [ ] ``group = 'com.yourname.modid'`` -> e.g.: ``group = 'com.sammy.superweapons'``
 		- [ ] ``archivesBaseName = 'modid'``
 		- [ ] Somewhere around lines 59, 80, and 106 should be a reference to ``examplemod``. Change them to your mod id.
+		- [ ] Around line 102, change the `args` value from `examplemod` to your mod id.
+
+4. **Create the Launch Configurations**
+	1. In Eclipse in the Gradle Tasks tab, run the ``forgegradle runs -> genEclipseRuns`` script to generate the launch configurations. This will take a few minutes to complete.
+	2. Once that is done, import the three launch configurations into Eclipse using the Import menu. Select ``Run/Debug -> Launch Configurations`` for the import type. Make sure to have the correct directory selected in the Import window!
 
 ### Checkpoint
 At this point you should be able to run the ``runClient`` configuration, launch Minecraft, and see your mod in the Mods menu. There's not much else you can do yet, but you shouldn't get any errors.
