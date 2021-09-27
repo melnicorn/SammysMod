@@ -42,6 +42,8 @@ We need to change several areas that use ``ExampleMod`` to use your internal mod
 ### Checkpoint
 At this point you should be able to run the ``runClient`` configuration, launch Minecraft, and see your mod in the Mods menu. There's not much else you can do yet, but you shouldn't get any errors.
 
+If it runs correctly, check in your code! In Eclipse: `Team -> Commit`. **Make sure to add all of the `Unstaged Changes` to `Staged Changes` using the `++` button.**
+
 ## Creating a class for your Axe
 1. Create a new package for items in ``src/main/java``, something like ``com.sammymc.items``.
 2. Use Eclipse to make a new class for your Axe. When you're creating the class in Eclipse, make sure to select ``net.minecraft.world.item.SwordItem`` as the superclass, and check the "Constructors from superclass" checkbox before creating it.
@@ -68,6 +70,8 @@ We now need to register your new Axe with Forge.
 ### Checkpoint
 At this point you should be able to run your mod, start a new creative world, and give yourself your weapon using `/give Dev superweapons:superaxe`. Test and make sure it acts like a sword by summoning a skeleton `/summon skeleton` and killing it. It will still look like a big purple checkerboard box at this point.
 
+If it runs correctly, check in your code! In Eclipse: `Team -> Commit`. **Make sure to add all of the `Unstaged Changes` to `Staged Changes` using the `++` button.**
+
 ## Making the Axe look like an Axe
 We need to create the data generation objects so that we can create the json files that map the texture to your axe. If you remember from the tutorial, this part gave us the most trouble, so reach out if it's not working.
 1. Make your axe texture using [Pixelart](https://www.pixilart.com/) or similar
@@ -89,7 +93,8 @@ We need to create the data generation objects so that we can create the json fil
 	- [ ] It needs a public, static function on it called `gatherData` that takes a `GatherDataEvent` parameter, and the `@SubscribeEvent` annotation on the method.
 	- [ ] At this point, this `gatherData` function should add `Items` as a provider to the `DataGenerator` if we are in client mode. (Refer to tutorial)
 
-5. We should be able to run the `runData` launch configuration now which will generate `src/generated/resources/assets/superweapons/models/item/superaxe.json`. This is where it got tricky last time though, and we couldn't get the actual texture to load. Try the following:
+5. We should be able to run the `runData` launch configuration now which will generate `src/generated/resources/assets/superweapons/models/item/superaxe.json`. This is where it got tricky last time though, and we couldn't get the actual texture to load. Do the following:
 	- [ ] At the top level in package explorer, right click the project and select "Refresh"
 	- [ ] Right click again and select `New -> Source Folder`. For the Folder Name, browse and select `src/generated/resources` and click `Finish`.
+	- [ ] Check in your code! In Eclipse: `Team -> Commit`. **Make sure to add all of the `Unstaged Changes` to `Staged Changes` using the `++` button.**
 	- [ ] Get in touch with me!!! I think I can get it working, but it's tricky and involves completely deleting the project, and pulling it back in from Github.
