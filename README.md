@@ -1,4 +1,5 @@
 
+
 # Sammy's Mod
 
 ## Setting up project
@@ -98,3 +99,88 @@ We need to create the data generation objects so that we can create the json fil
 	- [ ] Right click again and select `New -> Source Folder`. For the Folder Name, browse and select `src/generated/resources` and click `Finish`.
 	- [ ] Check in your code! In Eclipse: `Team -> Commit`. **Make sure to add all of the `Unstaged Changes` to `Staged Changes` using the `++` button.**
 	- [ ] Get in touch with me!!! I think I can get it working, but it's tricky and involves completely deleting the project, and pulling it back in from Github.
+
+## A bit of cleanup
+Looks like I forgot the part where we give your axe a nice display name. Let's fix that before moving forward
+ 1. Create the language map file
+	 - [ ] Create a new package under `src/generated/resources` called `assets.superweapons.lang`. You already have an `assets.superweapons` package, so this should just create a new `lang` folder.
+	 - [ ] Create a new file called `en_us.json` in the `lang` folder.
+	 - [ ] This JSON file will need a single key/value pair. Refer to the tutorial for the exact JSON format needed. The key will be `items.superweapons.superaxe` and the value will be whatever you want to see displayed.
+ 2. Update `SuperAxe` to have a hover-over message for the name
+	- [ ] Use eclipse to override the `appendHoverText` function in your `SuperAxe` class.   **Hint**: use the 'Source' menu to find this.
+	- [ ] Fix the variable names passed into the function.
+	- [ ] Keep the call to `super.appendHoverText` and add code afterward.
+	- [ ] Add a new `TranslatableComponent` in the `appendHoverText` function using the `items.superweapons.superaxe` key. Refer to the tutorial code for hints. In our case, we don't need the `distance` stuff that we needed in `TestItem`. You can just use the key itself.
+ 3. Run the game, make sure the nice name display name shows up. Assuming it's working, add `en_us.json` to source control, and check it in efore moving on to the next step.
+
+## Creating a recipe
+Creating a recipe is kind of similar to hooking up the axe model image to the axe. We need a `RecipeProvider` object that gets hooked up to the `DataGenerator` to create the appropriate files with we run the `runData` launch configuration. Let's go!
+
+ 1. Create a class that inherits from the `RecipeProvider` class.
+	 - [ ] Create a new class called `Recipes` in the `com.sammymc.setup` namespace. Use the eclipse 'Add Class' feature to create this class and inherit from `RecipeProvider`.
+	 - [ ] Fix the variable names in the constructor.
+ 2. Create the `shapedRecipe` for your axe.
+	- [ ] Use eclipse to override the `buildCraftingRecipes` function from the `RecipeProvider` class. **Hint**: Use the `Source` menu to find it. 
+	- [ ] Fix the variable name passed into the `buildCraftingRecipes` function.
+	- [ ] You don't need the call to the `super` class, so delete that line.
+	- [ ] To build your recipe you will need to use the static `shaped` function on the  `ShapedRecipeBuilder`  class, providing the `SUPERAXE` instance from your `Registration` class. There are several things you need for your recipe. Refer to the tutorial code if you need a memory refresh.
+		- The "shape" of the recipe (how ingredients get laid out in the crafting grid)
+		- The definition of what each ingredient is
+		- The group it belongs to in the creative mode item list.
+		- What the recipe is unlocked by
+		- And then finally, save it to the `Consumer<FinishedRecipe>` object that is passed into the `buildCraftingRecipes` function.
+	- [ ] Have some fun with it! Try different combinations of items. Try to get the code yourself, but if you need help, the following "spoiler" contains what I used for my Super Axe.
+		<details>
+			<summary>My expensive super axe </summary>
+
+			ShapedRecipeBuilder._shaped_(Registration.SUPERAXE.get())
+				.pattern("xyx")
+				.pattern(" s ")
+				.pattern(" s ")
+				.define('x',  Items.NETHERITE_BLOCK)
+				.define('y',  Items.DRAGON_EGG)
+				.define('s',  Items.IRON_BARS)
+				.group("superweapons")
+				.unlockedBy("has_netherite_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_BLOCK))
+				.save(consumer);
+		</details>
+ 3. Hook up your `Recipes` class to your `DataGenerator` and generate the recipe data files.
+	- [ ] Add the `Recipes` to the `DataGenerator.gatherData` function. Refer to tutorial code for hints.
+	- [ ] Make sure that your code conditionally checks that the event should _include server_.
+ 4. Test it out!
+	- [ ] Run the `runData` launch configuration.
+	- [ ] When that completes, refresh the `src/generated/resources` folder in eclipse. (You should see new folders for `data.superweapons.advancements.recipes.combat` and `data.superweapons.recipes`)
+	- [ ] Run the game.
+	- [ ] Go into creative mode.
+	- [ ] Give yourself the ingredients you need and a crafting table.
+	- [ ] Create the recipe on the table. Do you get an axe?
+ 5. If everything looks good, add any new files to source control, then check in all your changes.
+
+## Creating a smelting recipe
+Now that we have the crafting recipe, the smelting recipe is actually pretty simple.
+ 1. Create the smelting recipe
+	- [ ] Go back to your `Recipes` class. We need to add more code to the `buildCraftingRecipes` function.
+	- [ ] Just like you used the `ShapedRecipeBuilder` to create the crafting recipe, you will use the `SimpleCookingRecipeBuilder` to create the smelting recipe. Decide what kind of smelting you want. You can use `.blasting` for a blasting furnace or `.smelting` for a regular furnace.
+	- [ ] Since we haven't used the `SimpleCookingRecipeBuilder` in the tutorial, try and spend a little time to figure out how to call it. Here are some hints and some "spoiler" code if you get stuck.
+		 - The `.blasting` and `.smelting` functions each take 4 parameters. They are, in order: the ingredient being smelted; the ingredient you get after it smelts; the time it takes to smelt; the experience you get from smelting.
+		 - After you call the `.blasting` or `.smelting` function, you will need to chain calls to `.unlockedBy` and `.save` to the consumer.
+		<details>
+			<summary>My smelting recipe</summary>
+
+			SimpleCookingRecipeBuilder.blasting(
+	            Ingredient.of(Registration.SUPERAXE.get()), // The item you're smelting
+	            Items.NETHERITE_BLOCK, // The ingredient you get after it smelts
+	            1F, // The time it takes to smelt
+	            50) // The experience you get from smelting it
+	         .unlockedBy("has_super_axe", has(Registration.SUPERAXE.get()))
+	         .save(consumer);
+		</details>
+ 2. Rerun the data generator to update recipe files
+	 - [ ] Run the `runData` launch configuration
+	 - [ ] In eclipse refresh the `src/generated/resources` folder. You should see two new json files, one in `data.minecraft.recipes.building_blocks` and one in `data.minecraft.recipes`. The name of the JSON file will differ depending on what ingredient results from smelting your axe.
+ 3. Try it out.
+	- [ ] Run the game.
+	- [ ] Give yourself a furnace (or blast furnace) and some fuel, toss in the axe and see what pops out.
+ 4. If everything looks good, add any new files to source control, then check in all your changes.
+
+## TODO: Next -- make the axe SUPER!
